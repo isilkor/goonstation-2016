@@ -273,7 +273,12 @@
 			boutput(user, "<span style=\"color:blue\">You transfer [T] units into [A].</span>")
 			return
 
-	proc/handle_event(var/event) //This is sort of like a version of Topic that is not for browsing.
+	proc/signal_event(var/event)
+		// Right now, we only signal our container
+		if(src.loc)
+			src.loc.handle_event(event, src)
+
+	proc/handle_event(var/event, var/sender) //This is sort of like a version of Topic that is not for browsing.
 		return
 
 	//Called AFTER the material of the object was changed.
@@ -359,6 +364,10 @@ obj
 
 /atom/proc/HasProximity(atom/movable/AM as mob|obj)
 	return
+
+/atom/proc/set_icon_state(var/new_state)
+	src.icon_state = new_state
+	signal_event("icon_updated")
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")

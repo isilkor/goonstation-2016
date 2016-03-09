@@ -347,7 +347,7 @@ datum
 					src.add_reagent(C.result, speed,, src.total_temperature)
 
 				if(my_atom && my_atom.loc) //We might be inside a thing, let's tell it we updated our reagents.
-					my_atom.loc.handle_event("reagent_holder_update")
+					my_atom.loc.handle_event("reagent_holder_update", src)
 
 			defer_reactions = 0
 			if (deferred_reaction_checks)

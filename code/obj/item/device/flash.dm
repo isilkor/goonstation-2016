@@ -155,7 +155,7 @@
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
 		boutput(user, "<span style=\"color:red\"><b>The bulb has burnt out!</b></span>")
-		src.icon_state = "turboflash3"
+		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 
 	else
@@ -226,7 +226,7 @@
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
 		boutput(user, "<span style=\"color:red\"><b>The bulb has burnt out!</b></span>")
-		src.icon_state = "turboflash3"
+		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 	else
 		src.use++
@@ -238,7 +238,7 @@
 	if (prob(max(0,(use*2) + burn_mod)))
 		status = 0
 		boutput(user, "<span style=\"color:red\"><b>The bulb has burnt out!</b></span>")
-		icon_state = "flash3"
+		set_icon_state("flash3")
 		name = "depleted flash"
 
 	return
@@ -252,7 +252,7 @@
 		W.set_loc(T)
 
 		if(!src.status)
-			T.icon_state = "turboflash3"
+			T.set_icon_state("turboflash3")
 			T.status = 0
 
 		qdel(src)
@@ -327,7 +327,7 @@
 			var/obj/item/device/flash/F = new /obj/item/device/flash( get_turf(src) )
 			if(!src.status)
 				F.status = 0
-				F.icon_state = "flash3"
+				F.set_icon_state("flash3")
 			qdel(src)
 		else if (istype(W, /obj/item/screwdriver))
 			boutput(user, "<span style=\"color:blue\">You [src.secure ? "unscrew" : "secure"] the access panel.</span>")

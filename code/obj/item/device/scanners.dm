@@ -27,7 +27,7 @@ Contains:
 /obj/item/device/t_scanner/attack_self(mob/user)
 
 	on = !on
-	icon_state = "t-ray[on]"
+	set_icon_state("t-ray[on]")
 
 	if(on && !(src in processing_items))
 		processing_items.Add(src)
@@ -224,11 +224,11 @@ Contains:
 
 		if (!isnull(A.reagents))
 			if (A.reagents.reagent_list.len > 0)
-				src.icon_state = "reagentscan-results"
+				set_icon_state("reagentscan-results")
 			else
-				src.icon_state = "reagentscan-no"
+				set_icon_state("reagentscan-no")
 		else
-			src.icon_state = "reagentscan-no"
+			set_icon_state("reagentscan-no")
 
 		if (isnull(src.scan_results))
 			boutput(user, "<span style=\"color:red\">\The [src] encounters an error and crashes!</span>")

@@ -97,9 +97,9 @@
 			return
 
 		if (src.status)
-			icon_state = src.icon_on
+			set_icon_state(src.icon_on)
 		else
-			icon_state = src.icon_off
+			set_icon_state(src.icon_off)
 
 		return
 

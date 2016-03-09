@@ -49,7 +49,7 @@
 				if (R)
 					R.adapt(0)
 
-	this.set_icon_state()
+	this.update_icon_state()
 
 
 /obj/railway
@@ -79,8 +79,8 @@
 
 	proc/entering(var/obj/railway_vehicle/V)
 
-	proc/set_icon_state()
-		icon_state = "[dir1]-[dir2]"
+	proc/update_icon_state()
+		set_icon_state("[dir1]-[dir2]")
 
 	onVarChanged(variable, oldVal, val)
 		..()
@@ -89,7 +89,7 @@
 				var/D = dir2
 				dir2 = dir1
 				dir1 = D
-			set_icon_state()
+			update_icon_state()
 		else if (variable == "icon_state")
 			setup_dirs()
 

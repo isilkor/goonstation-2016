@@ -26,7 +26,8 @@
 
 	attack_self(mob/user)
 		on = !on
-		icon_state = "flight[on]"
+		set_icon_state("flight[on]")
+
 
 		if (on)
 			light.enable()

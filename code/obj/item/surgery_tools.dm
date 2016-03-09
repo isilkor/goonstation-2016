@@ -329,12 +329,12 @@ BODY BAG
 			return
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
 			src.charged = 0
-			src.icon_state = "[src.icon_base]-shock"
+			set_icon_state("[src.icon_base]-shock")
 			spawn(10)
-				src.icon_state = "[src.icon_base]-off"
+				set_icon_state("[src.icon_base]-off")
 			spawn(src.charge_time)
 				src.charged = 1
-				src.icon_state = "[src.icon_base]-on"
+				set_icon_state("[src.icon_base]-on")
 				playsound(user.loc, "sound/weapons/flash.ogg", 75, 1)
 
 	disposing()

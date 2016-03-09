@@ -39,9 +39,9 @@
 			return
 
 		if (src.reagents.total_volume)
-			src.icon_state = src.icon_filled
+			set_icon_state(src.icon_filled)
 		else
-			src.icon_state = src.icon_empty
+			set_icon_state(src.icon_empty)
 
 		return
 

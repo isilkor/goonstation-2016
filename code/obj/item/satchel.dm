@@ -95,6 +95,8 @@
 			if (100 to INFINITY)
 				src.overlays += image('icons/obj/items.dmi', "satcounter5")
 
+		signal_event("icon_updated")
+
 /obj/item/satchel/hydro
 	name = "produce satchel"
 	desc = "A leather bag. It holds 0/50 items of produce."

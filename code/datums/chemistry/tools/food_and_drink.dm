@@ -488,7 +488,7 @@
 				if (src.label)
 					bottle_image.icon_state = "label-[label]"
 					src.overlays += bottle_image
-			return
+		signal_event("icon_updated")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen) && !src.labeled)
@@ -590,6 +590,9 @@
 		if (wedge)
 			var/wedge_icon = icon('icons/obj/drink.dmi', "[glass_style]-[wedge]")
 			src.overlays += image("icon" = wedge_icon, "layer" = FLOAT_LAYER + 1)
+
+		signal_event("icon_updated")
+
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)

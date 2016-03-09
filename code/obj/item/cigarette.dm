@@ -691,7 +691,7 @@
 					user.show_text("Out of fuel.", "red")
 					return
 				src.lit = 1
-				src.icon_state = src.icon_open
+				set_icon_state(src.icon_open)
 				src.item_state = "zippoon"
 				user.visible_message("<span style=\"color:red\">Without even breaking stride, [user] flips open and lights the [src] in one smooth movement.</span>")
 
@@ -701,7 +701,7 @@
 					processing_items.Add(src)
 			else
 				src.lit = 0
-				src.icon_state = src.icon_closed
+				set_icon_state(src.icon_closed)
 				src.item_state = "zippo"
 				user.visible_message("<span style=\"color:red\">You hear a quiet click, as [user] shuts off the [src] without even looking what they're doing. Wow.</span>")
 
@@ -787,7 +787,7 @@
 				T.hotspot_expose(700,5)
 			if (fuel == 0)
 				src.lit = 0
-				src.icon_state = src.icon_closed
+				set_icon_state(src.icon_closed)
 				src.item_state = "zippo"
 				light.disable()
 

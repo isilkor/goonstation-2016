@@ -66,7 +66,7 @@
 		return
 
 	proc/update_icon()
-		icon_state = "[src.base_state][src.active ? null : "_off"]"
+		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).

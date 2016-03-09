@@ -1225,12 +1225,14 @@
 		src.status = 1
 		if (powered_overlay)
 			src.overlays += powered_overlay
+			signal_event("icon_updated")
 		return
 
 	proc/power_down()
 		src.status = 0
 		if (powered_overlay)
 			src.overlays = null
+			signal_event("icon_updated")
 		return
 
 obj/item/clothing/gloves/concussive

@@ -48,6 +48,7 @@
 			src.name = "\improper IV drip"
 		if (ismob(src.loc))
 			src.overlays += src.mode ? "inject" : "draw"
+		signal_event("icon_updated")
 
 	is_open_container()
 		return 1

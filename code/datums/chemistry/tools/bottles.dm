@@ -33,6 +33,7 @@
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
+		signal_event("icon_updated")
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

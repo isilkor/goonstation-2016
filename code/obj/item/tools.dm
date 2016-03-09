@@ -246,7 +246,7 @@ MATERIAL COLLECTOR
 			src.welding = 0
 			src.force = 3
 			src.damtype = "brute"
-			src.icon_state = "welder"
+			set_icon_state("welder")
 			user.update_inhands()
 		var/turf/location = user.loc
 
@@ -307,14 +307,14 @@ MATERIAL COLLECTOR
 		boutput(user, "<span style=\"color:blue\">You will now weld when you attack.</span>")
 		src.force = 15
 		src.damtype = "fire"
-		src.icon_state = "welder1"
+		set_icon_state("welder1")
 		if (!(src in processing_items))
 			processing_items.Add(src)
 	else
 		boutput(user, "<span style=\"color:blue\">Not welding anymore.</span>")
 		src.force = 3
 		src.damtype = "brute"
-		src.icon_state = "welder"
+		set_icon_state("welder")
 	user.update_inhands()
 	return
 
@@ -338,7 +338,7 @@ MATERIAL COLLECTOR
 			welding = 0
 			force = 3
 			damtype = "brute"
-			src.icon_state = "welder"
+			set_icon_state("welder")
 			processing_items.Remove(src)
 			return
 

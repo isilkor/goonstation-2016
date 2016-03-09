@@ -694,7 +694,7 @@
 		user << browse(dat, "window=rextractor;size=370x500")
 		onclose(user, "rextractor")
 
-	handle_event(var/event)
+	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
 			src.updateUsrDialog()
 

@@ -137,12 +137,12 @@
 
 /obj/item/extinguisher/attack_self(mob/user as mob)
 	if (safety)
-		src.icon_state = "fire_extinguisher1"
+		set_icon_state("fire_extinguisher1")
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
 		safety = 0
 	else
-		src.icon_state = "fire_extinguisher0"
+		set_icon_state("fire_extinguisher0")
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
 		safety = 1

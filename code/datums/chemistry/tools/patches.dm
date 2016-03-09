@@ -279,6 +279,7 @@
 			if (P)
 				src.overlays += image(P.icon, P.icon_state)
 				name = "[initial(src.name)] ([P.name]; [patches.len] patches)"
+				signal_event("icon_updated")
 		else
 			name = initial(src.name)
 

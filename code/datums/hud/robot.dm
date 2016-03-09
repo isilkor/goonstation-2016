@@ -1,3 +1,6 @@
+#define COLOR_MATRIX_IDENTITY list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+#define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0, 0.7152,0.7152,0.7152,0, 0.0722,0.0722,0.0722,0, 0,0,0,1)
+
 /datum/hud/robot
 	var/obj/screen/hud
 		mod1
@@ -58,8 +61,8 @@
 			var x = 1, y = 10, sx = 1, sy = 10
 			if (!boxes)
 				return
-			if (items_screen + 6 > master.module.contents.len)
-				items_screen = max(master.module.contents.len - 6, 1)
+			if (items_screen + 6 > master.module.modules.len)
+				items_screen = max(master.module.modules.len - 6, 1)
 			if (items_screen < 1)
 				items_screen = 1
 			boxes.screen_loc = "[x], [y] to [x+sx-1], [y-sy+1]"
@@ -82,28 +85,46 @@
 
 			if (items_screen > 1)
 				prev.icon_state = "up"
+				prev.color = COLOR_MATRIX_IDENTITY
 			else
 				prev.icon_state = "up_dis"
+				prev.color = COLOR_MATRIX_GRAYSCALE
 
 			var/sid = 1
 			var/i_max = items_screen + 7
-			if (i_max <= master.module.contents.len)
+			if (i_max <= master.module.modules.len)
 				next.icon_state = "down"
+				next.color = COLOR_MATRIX_IDENTITY
 			else
 				next.icon_state = "down_dis"
+				next.color = COLOR_MATRIX_GRAYSCALE
 
 			for (var/i = items_screen, i < i_max, i++)
-				if (i > master.module.contents.len)
+				if (i > master.module.modules.len)
 					break
-				var/obj/item/I = master.module.contents[i]
+				var/obj/item/I = master.module.modules[i]
 				var/obj/screen/S = screen_tools[sid]
-				S.name = I.name
-				S.icon = I.icon
-				S.icon_state = I.icon_state
-				S.overlays = I.overlays.Copy()
-				S.underlays = I.underlays.Copy()
-				S.color = I.color
-				S.alpha = I.alpha
+				if (!I)
+					// if the item has been deleted, just show an empty slot.
+					S.name = null
+					S.icon = 0
+					S.icon_state = null
+					S.overlays = null
+					S.underlays = null
+					S.color = COLOR_MATRIX_IDENTITY
+					S.alpha = 255
+				else
+					S.name = I.name
+					S.icon = I.icon
+					S.icon_state = I.icon_state
+					S.overlays = I.overlays.Copy()
+					S.underlays = I.underlays.Copy()
+					if (I.loc == master.module)
+						S.color = I.color
+					else
+						// If the tool is already equipped, set grayscale
+						S.color = COLOR_MATRIX_GRAYSCALE
+					S.alpha = I.alpha
 				S.screen_loc = "[x], [y - sid]"
 				add_screen(S)
 				sid++
@@ -116,9 +137,11 @@
 				update_equipment()
 				return
 			var/content_id = items_screen + i - 1
-			if (content_id > master.module.contents.len || content_id < 1)
+			if (content_id > master.module.modules.len || content_id < 1)
 				boutput(usr, "<span style=\"color:red\">An error occurred. Please notify Marquesas immediately. (Content ID: [content_id].)</span>")
-			var/obj/item/O = master.module.contents[content_id]
+			var/obj/item/O = master.module.modules[content_id]
+			if(!O || O.loc != master.module)
+				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
 				master.module_states[1] = O
 				O.loc = master
@@ -426,3 +449,12 @@
 					add_object(upgrade, HUD_LAYER+2, "CENTER+[startx+i]:24, SOUTH+1:4")
 					i++
 			last_upgrades = master.upgrades.Copy()
+
+	proc/handle_event(var/event, var/sender)
+		. = ..(event, sender)
+		if (event == "icon_updated")
+			// this is only ever emitted by atoms
+			var/atom/senderAtom = sender
+			if (senderAtom.loc != master.module)
+				// An equipped tool has changed its icon; refresh module display
+				update_equipment()

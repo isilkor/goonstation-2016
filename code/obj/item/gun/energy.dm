@@ -136,7 +136,7 @@
 		if(cell)
 			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "taser[ratio]"
+			set_icon_state("taser[ratio]")
 			return
 
 	borg

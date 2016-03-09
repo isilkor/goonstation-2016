@@ -65,6 +65,8 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 			src.name = "hypospray"
 			src.UpdateOverlays(null, "fluid")
 
+		signal_event("icon_updated")
+
 	on_reagent_change(add)
 		if (src.safe && add)
 			src.check_whitelist() // we only need to purge bad chems if new chems have been added

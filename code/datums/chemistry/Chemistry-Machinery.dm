@@ -59,7 +59,7 @@
 		src.updateUsrDialog()
 		src.update_icon()
 
-	handle_event(var/event)
+	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
 			src.update_icon()
 			src.updateUsrDialog()
@@ -322,7 +322,7 @@
 			attack_hand(user)
 			src.update_icon()
 
-	handle_event(var/event)
+	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
 			src.updateUsrDialog()
 
@@ -599,7 +599,7 @@
 		qdel(src)
 		return
 
-	handle_event(var/event)
+	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
 			src.updateUsrDialog()
 

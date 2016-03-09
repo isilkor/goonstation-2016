@@ -196,6 +196,8 @@
 		src.fluid_image.color = average.to_rgba()
 		src.underlays += src.fluid_image
 
+		signal_event("icon_updated")
+
 #undef S_DRAW
 #undef S_INJECT
 

@@ -2895,6 +2895,10 @@
 	else
 		return ..()
 
+/mob/living/silicon/robot/handle_event(var/event, var/sender)
+	// the HUD will handle icon_updated events, so proxy those
+	hud.handle_event(event, sender)
+
 
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //

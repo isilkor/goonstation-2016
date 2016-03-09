@@ -103,10 +103,10 @@
 		if (amount <= 0)
 			qdel(src)
 		else if (amount >= 1 && amount <= 4)
-			icon_state = "coil[amount]"
+			set_icon_state("coil[amount]")
 			base_name = "cable piece"
 		else
-			icon_state = "coil"
+			set_icon_state("coil")
 			base_name = "cable coil"
 		updateName()
 
