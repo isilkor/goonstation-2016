@@ -535,6 +535,7 @@
 	burn_output = 900
 	burn_possible = 1
 	health = 10
+	w_class = 1.0
 	
 	var/offset = 1
 
