@@ -6,6 +6,7 @@
  - Infrared Pens (not "infared", jfc mport)
  - Hand labeler
  - Clipboard
+ - Booklet
 */
 /* --------------------------------- */
 
@@ -523,3 +524,106 @@
 		..()
 		src.pen = new /obj/item/pen(src)
 		return
+		
+/obj/item/paper_booklet
+	name = "booklet"
+	desc = "A stack of papers stapled together in a sequence intended for reading in."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "booklet-thin"
+	
+	var/offset = 1
+
+	var/list/obj/item/paper/pages = new/list()
+	
+	New()
+		..()
+		if (!offset)
+			return
+		else
+			src.pixel_y = rand(-8, 8)
+			src.pixel_x = rand(-9, 9)
+
+	proc/give_title(var/mob/user)
+		var/n_name = input(user, "What would you like to label the booklet?", "Booklet Labelling", null) as null|text //stolen from paper.dm
+		if (!n_name)
+			return
+		n_name = copytext(html_encode(n_name), 1, 32)
+		if (((src.loc == user || (src.loc && src.loc.loc == user)) && user.stat == 0))
+			src.name = "booklet[n_name ? "- '[n_name]'" : null]"
+			logTheThing("say", user, null, "labels a paper booklet: [n_name]")
+		src.add_fingerprint(user)
+		return
+
+	attack_self(var/mob/user as mob, var/page = 1 )
+		var/obj/item/paper/cur_page = pages[page]
+		var/next_page = ""
+		var/prev_page = "     "
+		set src in view()
+		set category = "Local"
+
+		..()
+		. = cur_page.info
+
+		if (cur_page.form_startpoints && cur_page.form_endpoints)
+			for (var/x = cur_page.form_startpoints.len, x > 0, x--)
+				. = copytext(., 1, cur_page.form_startpoints[cur_page.form_startpoints[x]]) + "<a href='byond://?src=\ref[cur_page];form=[cur_page.form_startpoints[x]]'>" + copytext(., cur_page.form_startpoints[cur_page.form_startpoints[x]], cur_page.form_endpoints[cur_page.form_endpoints[x]]) + "</a>" + copytext(., cur_page.form_endpoints[cur_page.form_endpoints[x]])
+
+		var/font_junk = ""
+		for (var/i in cur_page.fonts)
+			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
+
+		if (page > 1)
+			prev_page = "<a href='byond://?src=\ref[src];action=prev_page;page=[page]'>Back</a> "
+		if (page < pages.len)
+			next_page = "<a href='byond://?src=\ref[src];action=next_page;page=[page]'>Next</a>"
+
+		user << browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=/ref[src];action=first'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
+
+		onclose(usr, "[src.name]")
+		return null
+
+	Topic(href, href_list)
+		..()
+
+		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+			return
+
+		var/page_num = text2num(href_list["page"])
+		var/obj/item/paper/cur_page = pages[page_num]
+
+		switch (href_list["action"])
+			if ("next_page")
+				src.attack_self(usr,page_num + 1)
+			if ("prev_page")
+				src.attack_self(usr,page_num - 1)
+			if ("write")
+				if (istype(usr.equipped(), /obj/item/pen))
+					cur_page.attackby(usr.equipped(),usr)
+					src.attack_self(usr,page_num)
+			if ("title_page")
+				cur_page.attack_self(usr)
+			if ("title_book")
+				src.give_title(usr)
+			if ("first_page")
+				src.attack_self(usr,1)
+			if ("last_page")
+				src.attack_self(usr,pages.len)
+				
+	attackby(var/obj/item/P as obj, mob/user as mob)
+		if (istype(P, /obj/item/paper))
+			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
+			if (S && S.ammo)
+				user.drop_item()
+				src.pages += P
+				P.set_loc(src)
+				S.ammo--
+				if (pages.len >= 10 && !icon_state == "booklet-thick")
+					src.icon_state = "booklet-thick"
+				src.visible_message("[user] staples the [P] at the back of the [src].")
+				playsound(user,'sound/effects/snap.ogg', 50, 1)
+			else
+				boutput(usr, "<span style=\"color:red\">You need a loaded stapler in hand to add this paper to the booklet.</span>")
+		else 
+			..()
+		return
+			
