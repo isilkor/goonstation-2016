@@ -262,10 +262,10 @@
 				user.drop_item()
 				B.pages += src
 				B.pages += P
+				src.visible_message("[user] staples [P] under [src].")
 				src.set_loc(B)
 				P.set_loc(B)
 				S.ammo--
-				src.visible_message("[user] staples [P] under [src].")
 				playsound(user,'sound/effects/snap.ogg', 50, 1)
 			else
 				boutput(usr, "<span style=\"color:red\">You need a loaded stapler in hand to staple these papers.</span>")
