@@ -604,7 +604,7 @@
 				if (istype(usr.equipped(), /obj/item/pen))
 					cur_page.attackby(usr.equipped(),usr)
 					src.attack_self(usr,page_num)
-			if ("title_page")
+			if ("title_page" && cur_page.loc.loc == usr)
 				cur_page.attack_self(usr)
 			if ("title_book")
 				src.give_title(usr)
