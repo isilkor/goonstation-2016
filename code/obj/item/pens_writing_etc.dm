@@ -582,6 +582,10 @@
 		onclose(usr, "[src.name]")
 		return null
 
+	examine()
+		..()
+		attack_self(usr, 1)
+
 	Topic(href, href_list)
 		..()
 
