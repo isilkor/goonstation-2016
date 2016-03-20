@@ -619,7 +619,7 @@
 				S.ammo--
 				if (pages.len >= 10 && !icon_state == "booklet-thick")
 					src.icon_state = "booklet-thick"
-				src.visible_message("[user] staples the [P] at the back of the [src].")
+				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/effects/snap.ogg', 50, 1)
 			else
 				boutput(usr, "<span style=\"color:red\">You need a loaded stapler in hand to add this paper to the booklet.</span>")
