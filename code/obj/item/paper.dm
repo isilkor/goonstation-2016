@@ -253,6 +253,22 @@
 			user.put_in_hand_or_drop(M)
 			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
 			qdel(src)
+		
+		else if (istype(P, /obj/item/paper))
+			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
+			if (S && S.ammo)
+				var/obj/item/paper_booklet/B = new
+				B.set_loc(src.loc)
+				user.drop_item()
+				B.pages += src
+				B.pages += P
+				src.visible_message("[user] staples [P] under [src].")
+				src.set_loc(B)
+				P.set_loc(B)
+				S.ammo--
+				playsound(user,'sound/effects/snap.ogg', 50, 1)
+			else
+				boutput(usr, "<span style=\"color:red\">You need a loaded stapler in hand to staple these papers.</span>")
 
 		else
 			..()
