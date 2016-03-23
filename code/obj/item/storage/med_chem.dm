@@ -39,7 +39,7 @@
 /obj/item/storage/firstaid/brute
 	name = "brute first aid"
 	icon_state = "brute1"
-	item_state = "firstaid-brute1"
+	item_state = "brute1"
 	desc = "A medical kit that contains several medical patches and pills for treating brute injuries. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("brute1", "brute2", "brute3", "brute4")
 	spawn_contents = list(/obj/item/reagent_containers/patch/bruise = 4,\
@@ -50,7 +50,7 @@
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"
 	icon_state = "burn1"
-	item_state = "firstaid-ointment1"
+	item_state = "burn1"
 	desc = "A medical kit that contains several medical patches and pills for treating burns. Contains one epinephrine syringe for emergency use and a health analyzer."
 	kit_styles = list("burn1", "burn2", "burn3", "burn4")
 	spawn_contents = list(/obj/item/reagent_containers/patch/burn = 4,\
@@ -61,7 +61,7 @@
 /obj/item/storage/firstaid/toxin
 	name = "toxin first aid"
 	icon_state = "toxin1"
-	item_state = "firstaid-toxin1"
+	item_state = "toxin1"
 	desc = "A medical kit designed to counter poisoning by common toxins. Contains three pills and syringes, and a health analyzer to determine the health of the patient."
 	kit_styles = list("toxin1", "toxin2", "toxin3", "toxin4")
 	spawn_contents = list(/obj/item/reagent_containers/syringe/antitoxin = 3,\
@@ -71,7 +71,7 @@
 /obj/item/storage/firstaid/oxygen
 	name = "oxygen deprivation first aid"
 	icon_state = "O21"
-	item_state = "firstaid-o21"
+	item_state = "O21"
 	desc = "A first aid kit that contains four pills of salbutamol, which is able to counter injuries caused by suffocation. Also contains a health analyzer to determine the health of the patient."
 	kit_styles = list("O21", "O22", "O23", "O24")
 	spawn_contents = list(/obj/item/reagent_containers/pill/salbutamol = 4,\
@@ -80,7 +80,7 @@
 /obj/item/storage/firstaid/brain
 	name = "neurological damage first aid"
 	icon_state = "brain1"
-	item_state = "firstaid-red1"
+	item_state = "brain1"
 	desc = "A medical kit that contains four pills of mannitol, which can heal brain damage. Also contains a health analyzer to determine the health of the patient."
 	kit_styles = list("brain1", "brain2", "brain3")
 	spawn_contents = list(/obj/item/reagent_containers/pill/mannitol = 4,\
@@ -90,7 +90,7 @@
 /obj/item/storage/firstaid/old
 	name = "dusty first aid kit"
 	icon_state = "berserk1"
-	item_state = "firstaid-berserk1"
+	item_state = "berserk1"
 	desc = "Huh, how old is this thing?"
 	kit_styles = list("berserk1", "berserk2", "berserk3")
 	spawn_contents = list(/obj/item/medical/ointment = 2,\
