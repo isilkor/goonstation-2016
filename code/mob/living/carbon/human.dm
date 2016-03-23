@@ -2077,36 +2077,30 @@
 				O.show_message(message, m_type)
 
 /mob/living/carbon/human/get_desc()
-
 	if (src.bioHolder && src.bioHolder.HasEffect("examine_stopper"))
 		return "<br><span style=\"color:red\">You can't seem to make yourself look at [src.name] long enough to observe anything!</span>"
 
 	if (src.simple_examine || isghostdrone(usr))
 		return
 
+	if(!usr.client.eye)
+		return // heh
+
 	. = ""
 	if (usr.stat == 0)
 		. += "<br><span style=\"color:blue\">You look closely at <B>[src.name]</B>.</span>"
-		var/distance = get_dist(usr, src)
-		sleep(distance + 1)
+		sleep(get_dist(usr.client.eye, src) + 1)
 	if (!istype(usr, /mob/dead/target_observer))
-		if (get_dist(usr, src) > 7 && (!usr.client || !usr.client.holder || usr.client.holder.state != 2))
+		if (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2))
 			return "[.]<br><span style=\"color:red\"><B>[src.name]</B> is too far away to see clearly.</span>"
 
 
 	. +=  "<br><span style=\"color:blue\">*---------*</span>"
-	//. +=  "<br><span style=\"color:blue\">This is <B>[src.name]</B>!</span>"
 
 	// crappy hack because you can't do \his[src] etc
 	var/t_his = his_or_her(src)
 	var/t_him = him_or_her(src)
-/*	if (src.gender == MALE)
-		t_his = "his"
-		t_him = "him"
-	else if (src.gender == FEMALE)
-		t_his = "her"
-		t_him = "her"
-*/
+
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 	if (found)
 		if (!ishuman(usr))
@@ -2279,7 +2273,7 @@
 	if (C && C.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((src.stat == 2 /*&& !src.reagents.has_reagent("montaguone") && !src.reagents.has_reagent("montaguone_extra")*/) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.paralysis) || (src.reagents.has_reagent("capulettium_plus") && src.weakened))
+	if ((src.stat == 2) || changeling_fakedeath || (src.reagents.has_reagent("capulettium") && src.paralysis) || (src.reagents.has_reagent("capulettium_plus") && src.weakened))
 		if (!src.decomp_stage)
 			. += "<br><span style=\"color:red\">[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else
@@ -2297,7 +2291,7 @@
 			else
 				. += "<br><span style=\"color:red\"><B>[src.name] looks severely burned!</B></span>"
 
-		if (src.stat > 0)// && src.reagents.has_reagent("montaguone")))
+		if (src.stat)
 			. += "<br><span style=\"color:red\">[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.</span>"
 		else
 			if (src.get_brain_damage() >= 60)
