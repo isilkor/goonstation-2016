@@ -653,7 +653,8 @@
 
 	proc/display_message(var/message)
 		if (ismob(loc))
-			boutput(loc, message)
+			var/mob/M = loc
+			M.show_message(message)
 
 	proc/run_program(datum/computer/file/pda_program/program)
 		if((!program) || (!program.holder))
@@ -756,7 +757,7 @@
 		return
 	var/mob/living/silicon/ai/ai = loc
 	if (ismob(ai.deployed_shell))
-		boutput(ai.deployed_shell, message)
+		ai.deployed_shell.show_message(message)
 
 /obj/item/device/pda2/ai/is_user_in_range(var/mob/user)
 	if (issilicon(user))
